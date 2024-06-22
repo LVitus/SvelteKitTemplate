@@ -1,0 +1,12 @@
+FROM surrealdb/surrealdb:latest
+
+WORKDIR /surrealdb
+
+ENV SURREAL_USER=root
+ENV SURREAL_PASS=root
+
+EXPOSE 8000
+
+USER root
+
+CMD ["start", "-A", "--auth", "--log", "info", "file:/database"]

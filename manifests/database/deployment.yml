@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database
+  template:
+    metadata:
+      labels:
+        app: database
+    spec:
+      containers:
+      - name: database-container
+        image: surrealdb/surrealdb:latest
+        args: ["start", "-A", "--auth", "--log", "info", "file:/database"]
+        ports:
+          - containerPort: 8000
+        env:
+          - name: SURREAL_USER
+            value: root
+          - name: SURREAL_PASS
+            value: root
+        volumeMounts:
+          - mountPath: /database
+            name: database-volume
+      volumes:
+        - name: database-volume
+          persistentVolumeClaim:
+            claimName: database-persistent-volume-claim

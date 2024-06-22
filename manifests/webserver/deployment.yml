@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver-deployment
+spec:
+  replicas: 2  # Anzahl der Pods, die laufen sollen
+  selector:
+    matchLabels:
+      app: webserver
+  template:
+    metadata:
+      labels:
+        app: webserver
+    spec:
+      containers:
+      - name: webserver-container
+        image: lvitus/sveltekit-demo:latest  # Ersetze dies mit dem Namen deines Images
+        ports:
+        - containerPort: 3000  # Der Port, auf dem dein Webserver läuft

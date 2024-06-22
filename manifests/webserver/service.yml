@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: webserver-service
+spec:
+  selector:
+    app: webserver  # Dies muss mit dem Labels deiner Pods, das im Deployment definiert ist, übereinstimmen
+  ports:
+    - protocol: TCP
+      port: 3000  # Der Port, auf dem der Service erreichbar sein soll
+      targetPort: 3000  # Der Port im Container, auf den der Service zeigt

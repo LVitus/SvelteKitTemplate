@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: webserver-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
+    traefik.ingress.kubernetes.io/custom-response-headers: |
+      Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+spec:
+  tls:
+  - hosts:
+    - bestbuds.cloud
+    secretName: bestbuds-cloud-tls
+  rules:
+  - host: bestbuds.cloud
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: webserver-service
+            port:
+              number: 3000

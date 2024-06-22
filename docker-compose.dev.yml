@@ -1,0 +1,34 @@
+version: '3.8'
+name: base
+
+services:
+  sveltekit-dev:
+    container_name: base-app
+    restart: on-failure
+    build:
+      context: ./
+      dockerfile: dockerfile.dev
+    ports:
+      - "5173:5173"
+    expose:
+      - "5173:5173"
+    depends_on:
+      - surrealdb
+    volumes:
+      - ./:/app
+      - /app/node_modules
+
+  surrealdb:
+    container_name: base-db
+    image: surrealdb/surrealdb:latest
+    command: start -A --auth --log info file:/database
+    ports:
+      - "8000:8000"
+    expose:
+      - "8000:8000"
+    environment:
+      SURREAL_USER: root
+      SURREAL_PASS: root # change to a secure pass for production
+    volumes:
+      - ./database:/database
+    user: root
