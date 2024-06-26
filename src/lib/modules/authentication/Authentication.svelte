@@ -15,6 +15,7 @@
 	});
 
 	let dialog: HTMLDialogElement;
+	let hasAccount = $state(true);
 </script>
 
 {#if ses.token && ses.token !== 'null'}
@@ -23,7 +24,15 @@
 	<button onclick={() => dialog.showModal()}>Sign In/Up</button>
 {/if}
 
-<dialog bind:this={dialog}>
-	<SignIn />
-	<SignUp />
+<dialog bind:this={dialog} class="rounded p-3">
+	<div class="grid gap-2">
+		{#if hasAccount}
+			<SignIn />
+		{:else}
+			<SignUp />
+		{/if}
+		<button onclick={() => (hasAccount = !hasAccount)} class="text-sm">
+			or {hasAccount ? 'Sign Up' : 'Sign In'}
+		</button>
+	</div>
 </dialog>

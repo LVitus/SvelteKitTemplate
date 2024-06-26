@@ -16,7 +16,7 @@
 	<slot />
 </main>
 
-<footer class=" flex justify-center">
+<footer class="flex justify-center">
 	<p>&copy; 2024</p>
 </footer>
 
