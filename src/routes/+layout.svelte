@@ -1,13 +1,13 @@
 <script>
 	import '../app.css';
+	import Authentication from '$lib/modules/authentication/Authentication.svelte';
 </script>
 
 <header>
 	<nav>
 		<ul class="flex justify-evenly">
 			<li><a href="/">Home</a></li>
-			<li><a href="/about">About</a></li>
-			<li><a href="/contact">Contact</a></li>
+			<li><Authentication /></li>
 		</ul>
 	</nav>
 </header>
