@@ -1,38 +1,26 @@
-# create-svelte
+# Simple SvelteKit template using Svelte 5
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+  You can find the source code for this template at [GitHub]().
 
-## Creating a project
+  This template includes a very basic layout, some packages and some other stuff that can be quite
+  useful for production.
 
-If you're seeing this, you've probably already done this step. Congrats!
+- Tailwind CSS
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+- Manifests for Kubernetes, including a manifest for a persistent SurrealDB instance and
+   automatic tls. For that also apply the cert-manager to yout cluster
+  - ``kubectl apply -f
+    <https://github.com/cert-manager/cert-manager/releases/download/v1.15.0/cert-manager.yaml>``
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+- A Dockerfile and Dockercomposefile for development. Also starting a persistent SurrealDB
+   instance
+- SvelteKits node adapter is also added
 
-## Developing
+Docs and additional information:
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+- [Svelte documentation](https://svelte.dev/)
+- [SvelteKit documentation](https://kit.svelte.dev/)
+- [Tailwind documentation](https://tailwindcss.com/)
+- [SurrealDB documentation](https://www.surrealdb.com/)
+- [Docker documentation](https://www.docker.com/)
+- [Kubernetes documentation](https://kubernetes.io/)
