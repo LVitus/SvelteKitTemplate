@@ -1,28 +1,28 @@
+import { invalidateAll } from "$app/navigation";
 import type Surreal from "surrealdb.js";
-import { db } from "./surreal";
 
-class Session {
+export class Session {
     db: Surreal;
-    token: string | null = $state(null);
 
     constructor(db: Surreal) {
-        this.db = db
+        this.db = db;
     }
 
     signUp = async (email: string, password: string) => {
-        this.token = await this.db.signup({
+        const token = await this.db.signup({
             scope: 'user',
             email,
             password
         }).catch((err: Error) => {
-            console.log(`Error: ${err.message}.`);
+            console.log(`Error: ${err}.`);
             return null;
         });
-        console.log('SignUp:', this.token);
+        if (token) document.cookie = `token=${token}; path=/; max-age=31536000; samesite=strict; secure=true;`;
+        await invalidateAll();
     };
 
     signIn = async (email: string, password: string) => {
-        this.token = await this.db.signin({
+        const token = await this.db.signin({
             scope: 'user',
             email,
             password
@@ -30,20 +30,13 @@ class Session {
             console.log(`Error: ${err.message}.`);
             return null;
         });
-        console.log('SignIn:', this.token);
-    };
-
-    authenticate = async (token: string | null) => {
-        this.token = token;
-        if (this.token) {
-            await this.db.authenticate(this.token);
-        }
+        if (token) document.cookie = `token=${token}; path=/; max-age=31536000; samesite=strict; secure=true;`;
+        await invalidateAll();
     };
 
     signOut = async () => {
-        this.token = 'null';
         await this.db.invalidate(); // Invalidate the authentication of the current connetion
+        document.cookie = `token=''; path=/; max-age=-1;`;
+        invalidateAll();
     };
 }
-
-export const ses = new Session(db);

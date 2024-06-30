@@ -1,5 +1,7 @@
 <script lang="ts">
-	import { ses } from '$lib/database/session.svelte';
+	import type { Session } from '$lib/database/session.svelte';
+
+	const { ses }: { ses: Session } = $props();
 
 	let email = '';
 	let password = '';
