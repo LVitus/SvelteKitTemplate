@@ -1,15 +1,30 @@
 <script lang="ts">
 	import type { Session } from '$lib/database/session.svelte';
 	import { Button, Input } from 'components';
+	import { z } from 'zod';
 
 	const { ses }: { ses: Session } = $props();
 
-	let email = '';
-	let password = '';
+	const schema = z.object({
+		email: z.string().email(),
+		password: z.string()
+	});
 
-	$effect(() => console.log(email, password));
+	const signIn = (e: SubmitEvent) => {
+		e.preventDefault();
+		const formData = Object.fromEntries(new FormData(e.target as HTMLFormElement));
+
+		const { success, data, error } = schema.safeParse(formData);
+		if (success) {
+			ses.signIn(data.email, data.password);
+		} else {
+			console.error(error.flatten().fieldErrors);
+		}
+	};
 </script>
 
-<Input bind:value={email} type="email" placeholder="Email" />
-<Input bind:value={password} type="password" placeholder="Password" />
-<Button onclick={() => ses.signIn(email, password)}>Sign In</Button>
+<form onsubmit={signIn} class="grid gap-2">
+	<Input name="email" type="email" placeholder="Email" autocomplete="email" />
+	<Input name="password" type="password" placeholder="Password" autocomplete="password" />
+	<Button class="rounded border py-1">Sign In</Button>
+</form>

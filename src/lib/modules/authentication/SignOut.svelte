@@ -5,4 +5,4 @@
 	const { ses }: { ses: Session } = $props();
 </script>
 
-<Button onclick={() => ses.signOut()}>Sign Out</Button>
+<Button class="rounded border py-1" onclick={() => ses.signOut()}>Sign Out</Button>

@@ -1,23 +1,17 @@
 <script>
 	import '../app.css';
-	import Authentication from '$lib/modules/authentication/Authentication.svelte';
+	import Sidebar from '$lib/modules/sidebar/Sidebar.svelte';
 </script>
 
-<header>
-	<nav>
-		<ul class="flex justify-evenly">
-			<li><a href="/">Home</a></li>
-			<li><Authentication /></li>
-		</ul>
-	</nav>
-</header>
+<header></header>
 
-<main class="flex-grow">
-	<slot />
+<main class="flex flex-grow">
+	<Sidebar />
+	<div class="flex w-full flex-col">
+		<slot />
+	</div>
 </main>
 
-<footer class="flex justify-center">
-	<p>&copy; 2024</p>
-</footer>
+<footer></footer>
 
 <style></style>

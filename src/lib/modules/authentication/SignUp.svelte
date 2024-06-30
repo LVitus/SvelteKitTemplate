@@ -10,4 +10,4 @@
 
 <Input bind:value={email} type="email" placeholder="Email" />
 <Input bind:value={password} type="password" placeholder="Password" />
-<Button onclick={() => ses.signUp(email, password)}>Sign Up</Button>
+<Button class="rounded border py-1" onclick={() => ses.signUp(email, password)}>Sign Up</Button>
