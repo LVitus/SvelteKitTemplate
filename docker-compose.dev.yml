@@ -1,9 +1,9 @@
 version: '3.8'
-name: base
+name: sveltekit-template
 
 services:
   sveltekit-dev:
-    container_name: base-app
+    container_name: sveltekit-template-app
     restart: on-failure
     build:
       context: ./
@@ -19,7 +19,7 @@ services:
       - /app/node_modules
 
   surrealdb:
-    container_name: base-db
+    container_name: sveltekit-template-db
     image: surrealdb/surrealdb:latest
     command: start -A --auth --log info file:/database
     ports:
