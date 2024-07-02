@@ -1,15 +1,24 @@
+
 import { invalidateAll } from "$app/navigation";
-import type Surreal from "surrealdb.js";
+import { Account } from "./account.svelte";
+import { Database } from "./database.svelte";
 
-export class Session {
-    db: Surreal;
 
-    constructor(db: Surreal) {
-        this.db = db;
+class Session {
+    database: Database;
+    account: Account;
+
+    constructor() {
+        this.database = new Database();
+        this.account = new Account();
+    }
+
+    init = async (token: string) => {
+        await this.database.init(token);
     }
 
     signUp = async (email: string, password: string) => {
-        const token = await this.db.signup({
+        const token = await this.database.surreal.signup({
             scope: 'user',
             email,
             password
@@ -17,12 +26,13 @@ export class Session {
             console.log(`Error: ${err}.`);
             return null;
         });
-        if (token) document.cookie = `token=${token}; path=/; max-age=31536000; samesite=strict; secure=true;`;
-        await invalidateAll();
+        if (token) {
+            document.cookie = `token=${token}; path=/; max-age=31536000; samesite=strict; secure=true;`;
+        } await invalidateAll();
     };
 
     signIn = async (email: string, password: string) => {
-        const token = await this.db.signin({
+        const token = await this.database.surreal.signin({
             scope: 'user',
             email,
             password
@@ -30,13 +40,17 @@ export class Session {
             console.log(`Error: ${err.message}.`);
             return null;
         });
-        if (token) document.cookie = `token=${token}; path=/; max-age=31536000; samesite=strict; secure=true;`;
+        if (token) {
+            document.cookie = `token=${token}; path=/; max-age=31536000; samesite=strict; secure=true;`;
+        }
         await invalidateAll();
     };
 
     signOut = async () => {
-        await this.db.invalidate(); // Invalidate the authentication of the current connetion
+        await this.database.surreal.invalidate(); // Invalidate the authentication of the current connetion
         document.cookie = `token=''; path=/; max-age=-1;`;
-        invalidateAll();
+        await invalidateAll();
     };
 }
+
+export const session = new Session();
