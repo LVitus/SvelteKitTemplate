@@ -32,7 +32,12 @@ export class Database {
         if (token) {
             console.log("✅ 🍪 Found JWT in Cookies 🍪 ✅");
 
-            const authenticated = await this.surreal.authenticate(token);
+            const authenticated = await this.surreal.authenticate(token).catch((error: Error) => {
+                console.log("❌ 🚫 Error authenticating with JWT in SurrealDB 🚫 ❌", error);
+                document.cookie = `token=''; path=/; max-age=-1;`;
+                return false;
+            });
+
             if (authenticated) {
                 this.authenticated = true;
                 console.log("✅ 🔐 Authenticated you with JWT in SurrealDB 🔐 ✅", ((await this.surreal.query(`RETURN $auth FETCH auth;`))[0]));

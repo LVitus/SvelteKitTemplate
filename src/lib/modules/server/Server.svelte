@@ -9,7 +9,7 @@
 	let dialog: HTMLDialogElement;
 
 	const schema = z.object({
-		id: z.string().optional(),
+		id: z.object({ tb: z.literal('server'), id: z.string() }).optional(),
 		name: z.string(),
 		ip: z.string(),
 		sshPort: z.string(),
