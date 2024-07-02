@@ -4,9 +4,8 @@
 
 	let { data }: { data: PageData } = $props();
 
-	const servers = data.db.query<{ name: string; description: string }[]>(`SELECT * FROM server`);
 	$effect(() => {
-		servers.then((server) => console.log('This Spheres Servers', server));
+		data.servers.then((server) => console.log('This Spheres Servers', server));
 	});
 </script>
 
@@ -21,11 +20,11 @@
 		<Server />
 	</div>
 
-	{#await servers}
+	{#await data.servers}
 		<p>Loading...</p>
 	{:then servers}
-		{#if servers.at(0).length > 0}
-			{#each servers.at(0) as server}
+		{#if servers.at(0) && servers.at(0)!.length > 0}
+			{#each servers.at(0)! as server}
 				<Server {server} />
 			{/each}
 		{:else}

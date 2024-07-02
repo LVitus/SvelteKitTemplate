@@ -1,9 +1,9 @@
 <script lang="ts">
-	import type { Session } from '$lib/database/session.svelte';
+	import { session } from '$lib/database/session.svelte';
 	import { Button, Input } from 'components';
 	import { z } from 'zod';
 
-	const { ses }: { ses: Session } = $props();
+	const { ses }: { ses: typeof session } = $props();
 
 	const schema = z.object({
 		email: z.string().email(),

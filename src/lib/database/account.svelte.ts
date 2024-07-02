@@ -1,5 +1,3 @@
-class Account {
-    email: string | null = $state(null);
+export class Account {
+    email: string = $state('')
 }
-
-export default new Account();
