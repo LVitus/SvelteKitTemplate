@@ -5,10 +5,11 @@ export const ssr = false;
 
 export const load: LayoutLoad = (async ({ data }) => {
 
-    const db = await session.init(data.token);
+    await session.init(data.token);
 
     return {
         ses: session,
-        db
+        db: session.database,
+        user: null
     };
 });
