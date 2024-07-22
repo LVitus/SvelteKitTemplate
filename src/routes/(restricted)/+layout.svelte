@@ -3,7 +3,8 @@
 </script>
 
 <header class="p-2">
-	<nav>
+	<nav class="flex items-center justify-between">
+		<a href="/" class="text-xl font-semibold">Notes</a>
 		<ul>
 			<li><Authentication /></li>
 		</ul>
